@@ -1,0 +1,1362 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nossa Casa — Lista de Presentes | Isabel & Calebe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Inter:wght@200;300;400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --terracota: #B85C48;
+            --terracota-dark: #A0503D;
+            --terracota-light: #D4856A;
+            --sand: #F7F3EE;
+            --cream: #FDFBF9;
+            --white: #FFFCFA;
+            --text: #4A4A48;
+            --text-light: #8A8A88;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            color: var(--text);
+            line-height: 1.8;
+            letter-spacing: 0.3px;
+            overflow-x: hidden;
+            background: var(--cream);
+        }
+
+        /* Animações Globais */
+        @keyframes floatSoft {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; }
+            50% { opacity: 1; }
+        }
+
+        /* Animações Específicas por Cômodo */
+        
+        /* Cozinha - Fumaça */
+        @keyframes steamRise {
+            0% { 
+                transform: translateY(100%) scale(0.5); 
+                opacity: 0; 
+            }
+            20% { 
+                opacity: 0.4; 
+            }
+            80% { 
+                opacity: 0.2; 
+            }
+            100% { 
+                transform: translateY(-20vh) scale(1.5); 
+                opacity: 0; 
+            }
+        }
+
+        @keyframes steamWave {
+            0%, 100% { transform: translateX(0); }
+            50% { transform: translateX(20px); }
+        }
+
+        /* Banheiro - Gotas e Espuma */
+        @keyframes dropFall {
+            0% { 
+                transform: translateY(-10vh) scale(0); 
+                opacity: 0; 
+            }
+            10% { 
+                opacity: 0.6; 
+                transform: translateY(0) scale(1);
+            }
+            90% { 
+                opacity: 0.4; 
+            }
+            100% { 
+                transform: translateY(110vh) scale(0.8); 
+                opacity: 0; 
+            }
+        }
+
+        @keyframes bubbleFloat {
+            0%, 100% { 
+                transform: translateY(0) translateX(0); 
+                opacity: 0.3;
+            }
+            25% { 
+                transform: translateY(-30px) translateX(10px); 
+            }
+            50% { 
+                transform: translateY(-60px) translateX(-5px); 
+                opacity: 0.6;
+            }
+            75% { 
+                transform: translateY(-90px) translateX(15px); 
+            }
+        }
+
+        @keyframes bubblePop {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.2); opacity: 0; }
+        }
+
+        /* Quarto - Estrelas e Sonho */
+        @keyframes starTwinkle {
+            0%, 100% { opacity: 0.2; transform: scale(0.8); }
+            50% { opacity: 0.8; transform: scale(1.2); }
+        }
+
+        @keyframes moonGlow {
+            0%, 100% { box-shadow: 0 0 20px rgba(255, 247, 224, 0.4); }
+            50% { box-shadow: 0 0 40px rgba(255, 247, 224, 0.7); }
+        }
+
+        @keyframes zzzFloat {
+            0% { 
+                transform: translateY(0) translateX(0) scale(0.8); 
+                opacity: 0; 
+            }
+            20% { 
+                opacity: 0.6; 
+            }
+            100% { 
+                transform: translateY(-80px) translateX(30px) scale(1.2); 
+                opacity: 0; 
+            }
+        }
+
+        /* Sala - Luzes e Conforto */
+        @keyframes lightFlicker {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        @keyframes dustMote {
+            0% { 
+                transform: translateY(0) translateX(0); 
+                opacity: 0; 
+            }
+            50% { 
+                opacity: 0.4; 
+            }
+            100% { 
+                transform: translateY(-100px) translateX(50px); 
+                opacity: 0; 
+            }
+        }
+
+        .app {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        /* SLIDER HORIZONTAL */
+        .slider {
+            position: relative;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-snap-type: x mandatory;
+            scroll-snap-stop: always;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .slide {
+            flex: 0 0 100vw;
+            width: 100vw;
+            height: 100vh;
+            scroll-snap-align: start;
+            position: relative;
+            padding: 24px 20px 100px;
+            box-sizing: border-box;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .slide-inner {
+            width: 100%;
+            max-width: 480px;
+            max-height: 100%;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.96);
+            border: 1px solid rgba(184, 92, 72, 0.12);
+            padding: 22px 20px 24px;
+            box-sizing: border-box;
+            overflow-y: auto;
+            position: relative;
+            z-index: 100;
+            animation: fadeUp 0.6s ease-out;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+        }
+
+        /* CAPA */
+        .slide-capa {
+            background: linear-gradient(135deg, var(--terracota) 0%, var(--terracota-dark) 100%);
+            color: var(--white);
+        }
+
+        .slide-capa .slide-inner {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+        }
+
+        .capa-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .capa-roof {
+            width: 80px;
+            height: 60px;
+            margin: 0 auto 16px;
+            position: relative;
+        }
+
+        .capa-roof svg {
+            width: 100%;
+            height: 100%;
+            fill: none;
+            stroke: var(--white);
+            stroke-width: 1.5;
+            opacity: 0.9;
+        }
+
+        .capa-names {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            font-weight: 300;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .capa-names span {
+            color: var(--terracota-light);
+            font-style: italic;
+            font-weight: 400;
+        }
+
+        .capa-date {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            opacity: 0.9;
+        }
+
+        .capa-text {
+            margin-top: 24px;
+            font-size: 0.95rem;
+            line-height: 2;
+            opacity: 0.95;
+            text-align: center;
+        }
+
+        .capa-text span {
+            display: block;
+            margin-top: 16px;
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--terracota-light);
+            line-height: 1.8;
+        }
+
+        .capa-hint {
+            margin-top: 32px;
+            text-align: center;
+            font-size: 0.85rem;
+            opacity: 0.9;
+        }
+
+        .capa-hint-icon {
+            margin-top: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            color: var(--terracota-light);
+            font-size: 0.9rem;
+        }
+
+        .capa-hint-icon span.arrows {
+            font-size: 1.4rem;
+            animation: floatSoft 2.5s ease-in-out infinite;
+        }
+
+        /* Cabeçalho dos Cômodos */
+        .room-header {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 14px;
+            position: relative;
+            z-index: 110;
+        }
+
+        .room-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            background: rgba(184, 92, 72, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            animation: floatSoft 6s ease-in-out infinite;
+            border: 1px solid rgba(184, 92, 72, 0.15);
+        }
+
+        .room-title-wrap {
+            flex: 1;
+        }
+
+        .room-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: var(--text);
+            font-weight: 400;
+            margin-bottom: 4px;
+        }
+
+        .room-subtitle {
+            font-size: 0.85rem;
+            color: var(--text-light);
+        }
+
+        .room-tag {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--terracota);
+            padding: 4px 10px;
+            border-radius: 20px;
+            background: rgba(184, 92, 72, 0.08);
+            margin-top: 6px;
+            display: inline-block;
+            font-weight: 400;
+        }
+
+        .room-note {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 16px;
+            line-height: 1.9;
+            position: relative;
+            z-index: 110;
+        }
+
+        /* Cards de Presentes */
+        .gifts-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            position: relative;
+            z-index: 110;
+        }
+
+        .gift-card {
+            border-radius: 16px;
+            border: 1px solid rgba(184, 92, 72, 0.1);
+            padding: 16px 18px;
+            background: rgba(255, 255, 255, 0.98);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            z-index: 110;
+        }
+
+        .gift-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 3px;
+            height: 100%;
+            background: var(--terracota-light);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .gift-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(184, 92, 72, 0.1);
+            border-color: rgba(184, 92, 72, 0.25);
+        }
+
+        .gift-card:hover::before {
+            opacity: 1;
+        }
+
+        .gift-main {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .gift-name {
+            font-size: 0.9rem;
+            color: var(--text);
+            line-height: 1.5;
+            flex: 1;
+        }
+
+        .gift-price {
+            font-size: 0.85rem;
+            color: var(--terracota);
+            white-space: nowrap;
+            font-weight: 400;
+            font-family: 'Cormorant Garamond', serif;
+        }
+
+        .gift-actions {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .gift-cta {
+            font-size: 0.7rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            padding: 10px 18px;
+            border-radius: 25px;
+            border: 1px solid rgba(184, 92, 72, 0.4);
+            background: transparent;
+            color: var(--terracota);
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 400;
+        }
+
+        .gift-cta:hover {
+            background: var(--terracota);
+            color: var(--white);
+            border-color: var(--terracota);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(184, 92, 72, 0.2);
+        }
+
+        /* ========== COZINHA ========== */
+        #slide-cozinha {
+            background: linear-gradient(180deg, #F5F3F0 0%, var(--sand) 100%);
+            position: relative;
+        }
+
+        #slide-cozinha::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(212, 133, 106, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(184, 92, 72, 0.1) 0%, transparent 40%);
+            z-index: 1;
+        }
+
+        /* Fumaça animada */
+        .steam-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            overflow: hidden;
+        }
+
+        .steam-particle {
+            position: absolute;
+            bottom: 0;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.4) 0%, transparent 70%);
+            border-radius: 50%;
+            filter: blur(20px);
+            animation: steamRise 8s ease-out infinite;
+        }
+
+        .steam-particle:nth-child(1) { left: 10%; animation-delay: 0s; width: 60px; height: 60px; }
+        .steam-particle:nth-child(2) { left: 25%; animation-delay: 1.5s; width: 100px; height: 100px; }
+        .steam-particle:nth-child(3) { left: 40%; animation-delay: 3s; width: 70px; height: 70px; }
+        .steam-particle:nth-child(4) { left: 55%; animation-delay: 0.8s; width: 90px; height: 90px; }
+        .steam-particle:nth-child(5) { left: 70%; animation-delay: 2.2s; width: 50px; height: 50px; }
+        .steam-particle:nth-child(6) { left: 85%; animation-delay: 4s; width: 80px; height: 80px; }
+
+        /* Panela decorativa */
+        .kitchen-deco {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            opacity: 0.1;
+            z-index: 2;
+        }
+
+        /* ========== QUARTO ========== */
+        #slide-quarto {
+            background: linear-gradient(180deg, #2C3E50 0%, #34495E 50%, #4A5F7A 100%);
+            position: relative;
+        }
+
+        #slide-quarto .slide-inner {
+            background: rgba(255, 255, 255, 0.97);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        /* Lua */
+        .moon {
+            position: absolute;
+            top: 15%;
+            right: 15%;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #FFF8E7 0%, #FFE4B5 100%);
+            box-shadow: 0 0 30px rgba(255, 248, 231, 0.5);
+            animation: moonGlow 4s ease-in-out infinite;
+            z-index: 40;
+        }
+
+        .moon::after {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background: rgba(200, 200, 200, 0.3);
+            border-radius: 50%;
+            top: 15px;
+            left: 20px;
+        }
+
+        /* Estrelas */
+        .stars-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60%;
+            pointer-events: none;
+            z-index: 30;
+        }
+
+        .star {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: white;
+            border-radius: 50%;
+            animation: starTwinkle 3s ease-in-out infinite;
+        }
+
+        .star:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
+        .star:nth-child(2) { top: 25%; left: 80%; animation-delay: 0.5s; width: 2px; height: 2px; }
+        .star:nth-child(3) { top: 15%; left: 60%; animation-delay: 1s; }
+        .star:nth-child(4) { top: 35%; left: 30%; animation-delay: 1.5s; width: 2px; height: 2px; }
+        .star:nth-child(5) { top: 20%; left: 45%; animation-delay: 2s; }
+        .star:nth-child(6) { top: 40%; left: 70%; animation-delay: 0.3s; width: 2px; height: 2px; }
+        .star:nth-child(7) { top: 8%; left: 85%; animation-delay: 0.8s; }
+        .star:nth-child(8) { top: 30%; left: 10%; animation-delay: 1.2s; width: 2px; height: 2px; }
+
+        /* Zzz animado */
+        .sleep-container {
+            position: absolute;
+            top: 25%;
+            right: 25%;
+            z-index: 45;
+        }
+
+        .zzz {
+            position: absolute;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.6);
+            animation: zzzFloat 4s ease-out infinite;
+        }
+
+        .zzz:nth-child(1) { animation-delay: 0s; right: 0; }
+        .zzz:nth-child(2) { animation-delay: 1.3s; right: 15px; top: -10px; font-size: 1rem; }
+        .zzz:nth-child(3) { animation-delay: 2.6s; right: 30px; top: -20px; font-size: 0.8rem; }
+
+        /* ========== BANHEIRO ========== */
+        #slide-banho {
+            background: linear-gradient(180deg, #E8F4F8 0%, #D4E9F0 50%, #C5DFE8 100%);
+            position: relative;
+        }
+
+        /* Gotas de água */
+        .drops-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            pointer-events: none;
+            z-index: 50;
+            overflow: hidden;
+        }
+
+        .water-drop {
+            position: absolute;
+            width: 8px;
+            height: 12px;
+            background: linear-gradient(180deg, rgba(255, 255, 255, 0.9) 0%, rgba(200, 230, 255, 0.6) 100%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            animation: dropFall 5s linear infinite;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+        }
+
+        .water-drop:nth-child(1) { left: 15%; animation-delay: 0s; }
+        .water-drop:nth-child(2) { left: 35%; animation-delay: 1.2s; width: 6px; height: 9px; }
+        .water-drop:nth-child(3) { left: 55%; animation-delay: 2.4s; }
+        .water-drop:nth-child(4) { left: 75%; animation-delay: 0.8s; width: 5px; height: 8px; }
+        .water-drop:nth-child(5) { left: 25%; animation-delay: 3.6s; width: 7px; height: 10px; }
+        .water-drop:nth-child(6) { left: 85%; animation-delay: 2s; width: 6px; height: 9px; }
+        .water-drop:nth-child(7) { left: 45%; animation-delay: 4.2s; width: 5px; height: 8px; }
+
+        /* Bolhas de sabão */
+        .bubbles-container {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            pointer-events: none;
+            z-index: 40;
+        }
+
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.1) 60%, transparent 70%);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            animation: bubbleFloat 8s ease-in-out infinite;
+            box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5);
+        }
+
+        .bubble:nth-child(1) { width: 40px; height: 40px; bottom: 10%; left: 20%; animation-delay: 0s; }
+        .bubble:nth-child(2) { width: 25px; height: 25px; bottom: 20%; left: 60%; animation-delay: 2s; }
+        .bubble:nth-child(3) { width: 35px; height: 35px; bottom: 5%; left: 80%; animation-delay: 4s; }
+        .bubble:nth-child(4) { width: 20px; height: 20px; bottom: 30%; left: 40%; animation-delay: 1s; }
+        .bubble:nth-child(5) { width: 30px; height: 30px; bottom: 15%; left: 10%; animation-delay: 3s; }
+        .bubble:nth-child(6) { width: 15px; height: 15px; bottom: 25%; left: 75%; animation-delay: 5s; }
+
+        /* ========== SALA ========== */
+        #slide-estar {
+            background: linear-gradient(180deg, #F0EDE8 0%, var(--sand) 50%, #E8E4DE 100%);
+            position: relative;
+        }
+
+        /* Luzes/Partículas no ar */
+        .lights-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            pointer-events: none;
+            z-index: 30;
+            overflow: hidden;
+        }
+
+        .light-particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(212, 133, 106, 0.3);
+            border-radius: 50%;
+            animation: dustMote 10s linear infinite;
+            box-shadow: 0 0 10px rgba(212, 133, 106, 0.5);
+        }
+
+        .light-particle:nth-child(1) { top: 80%; left: 20%; animation-delay: 0s; }
+        .light-particle:nth-child(2) { top: 90%; left: 50%; animation-delay: 2s; width: 3px; height: 3px; }
+        .light-particle:nth-child(3) { top: 85%; left: 80%; animation-delay: 4s; }
+        .light-particle:nth-child(4) { top: 95%; left: 30%; animation-delay: 1s; width: 2px; height: 2px; }
+        .light-particle:nth-child(5) { top: 75%; left: 60%; animation-delay: 3s; }
+        .light-particle:nth-child(6) { top: 88%; left: 10%; animation-delay: 5s; width: 3px; height: 3px; }
+
+        /* Luminária decorativa */
+        .lamp-deco {
+            position: absolute;
+            top: 30px;
+            left: 30px;
+            width: 40px;
+            height: 60px;
+            opacity: 0.15;
+            z-index: 20;
+        }
+
+        /* MENU INFERIOR */
+        .bottom-nav {
+            position: fixed;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 12px 16px 20px;
+            background: rgba(253, 251, 249, 0.98);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(184, 92, 72, 0.12);
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            z-index: 1000;
+        }
+
+        .nav-dot {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            background: transparent;
+            border: 1px solid transparent;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-dot span {
+            font-size: 0.6rem;
+            color: var(--text-light);
+            margin-top: 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .nav-dot::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            background: rgba(184, 92, 72, 0.08);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .nav-dot:hover::before {
+            opacity: 1;
+        }
+
+        .nav-dot.active {
+            border-color: rgba(184, 92, 72, 0.4);
+            background: var(--white);
+        }
+
+        .nav-dot.active span {
+            color: var(--terracota);
+        }
+
+        /* Otimização de GPU para animações */
+        .steam-particle,
+        .water-drop,
+        .bubble,
+        .light-particle,
+        .star {
+            will-change: transform, opacity;
+        }
+
+        /* Responsivo */
+        @media (min-width: 768px) {
+            .app {
+                max-width: 100%;
+            }
+            
+            .slide-inner {
+                max-width: 520px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .slide {
+                padding: 20px 16px 90px;
+            }
+            
+            .slide-inner {
+                padding: 18px 16px 20px;
+            }
+            
+            .capa-names {
+                font-size: 1.6rem;
+                letter-spacing: 6px;
+            }
+            
+            .room-title {
+                font-size: 1.1rem;
+            }
+            
+            .nav-dot {
+                width: 50px;
+                height: 50px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="app">
+    <div class="slider" id="slider">
+
+        <!-- CAPA -->
+        <section class="slide slide-capa" id="slide-inicio">
+            <div class="slide-inner">
+                <div class="capa-header">
+                    <div class="capa-roof">
+                        <svg viewBox="0 0 100 60">
+                            <path d="M10 50 L50 10 L90 50" stroke-linecap="round" stroke-linejoin="round"/>
+                            <rect x="35" y="35" width="30" height="20" rx="2"/>
+                        </svg>
+                    </div>
+                    <div class="capa-names">Isabel <span>&</span> Calebe</div>
+                    <div class="capa-date">27 de junho de 2026</div>
+                </div>
+                <p class="capa-text">
+                    Bem-vindo(a) à nossa casa dos sonhos em forma de site.
+                    Aqui você vai passear pela cozinha, quarto, banho e sala,
+                    vendo alguns presentes que escolhemos com carinho.
+                    <span>
+                        Nada aqui é obrigação.<br>
+                        Se algum presente combinar com você, será muito especial.<br>
+                        Se não, a sua presença já é tudo o que precisamos.
+                    </span>
+                </p>
+                <div class="capa-hint">
+                    <div>Para conhecer cada cantinho, arraste para o lado</div>
+                    <div class="capa-hint-icon">
+                        <span class="arrows">←</span>
+                        <span>deslize</span>
+                        <span class="arrows">→</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- COZINHA -->
+        <section class="slide" id="slide-cozinha">
+            <!-- Efeito de fumaça -->
+            <div class="steam-container">
+                <div class="steam-particle"></div>
+                <div class="steam-particle"></div>
+                <div class="steam-particle"></div>
+                <div class="steam-particle"></div>
+                <div class="steam-particle"></div>
+                <div class="steam-particle"></div>
+            </div>
+
+            <div class="slide-inner">
+                <div class="room-header">
+                    <div class="room-icon">🍳</div>
+                    <div class="room-title-wrap">
+                        <h2 class="room-title">Cozinha — Sabores do Nosso Lar</h2>
+                        <p class="room-subtitle">Onde vão nascer nossos cafés, jantares e risadas</p>
+                        <span class="room-tag">Primeiras receitas juntos</span>
+                    </div>
+                </div>
+                <p class="room-note">
+                    Aqui vamos experimentar receitas, errar, acertar e transformar momentos simples em memórias.
+                </p>
+
+                <div class="gifts-grid">
+                    <article class="gift-card">
+                        <div class="gift-main">
+                            <div class="gift-name">Nosso primeiro café da manhã (cafeteira)</div>
+                            <div class="gift-price">R$ 200</div>
+                        </div>
+                        <div class="gift-actions">
+                            <a href="#" class="gift-cta">Dar este presente</a>
+                        </div>
+                    </article>
+
+                    <article class="gift-card">
+                        <div class="gift-main">
+                            <div class="gift-name">Café passado com carinho (jogo de xícaras)</div>
+                            <div class="gift-price">R$ 90</div>
+                        </div>
+                        <div class="gift-actions">
+                            <a href="#" class="gift-cta">Dar este presente</a>
+                        </div>
+                    </article>
+
+                    <article class="gift-card">
+                        <div class="gift-main">
+                            <div class="gift-name">Jantar romântico em casa (kit taças)</div>
+                            <div class="gift-price">R$ 120</div>
+                        </div>
+                        <div class="gift-actions">
+                            <a href="#" class="gift-cta">Dar este presente</a>
+                        </div>
+                    </article>
+
+                    <article class="gift-card">
+                        <div class="gift-main">
+                            <div class="gift-name">Receitas que vamos descobrir juntos (jogo de panelas)</div>
+                            <div class="gift-price">R$ 220</div>
+                        </div>
+                        <div class="gift-actions">
+                            <a href="#" class="gift-cta">Dar este presente</a>
+                        </div>
+                    </article>
+
+                    <article class="gift-card">
+                        <div class="gift-main">
+                            <div class="gift-name">Domingo de macarronada (panela grande)</div>
+                            <div class="gift-price">R$ 140</div>
+                        </div>
+                        <div class="gift-actions">
+                            <a href="#" class="gift-cta">Dar este presente</a>
+                        </div>
+                    </article>
+
+                    <article class="gift-card">
+                        <div class="gift-main">
+                            <div class="gift-name">Noite de hambúrguer em casa (sanduicheira)</div>
+                            <div class="gift-price">R$ 150</div>
+                        </div>
+                        <div class="gift-actions">
+                            <a href="#" class="gift-cta">Dar este presente</a>
+                        </div>
+                    </article>
+
+                    <article class="gift-card">
+                        <div class="gift-main">
+                            <div class="gift-name">Almoço de família (travessa de vidro)</div>
+                            <div class="gift-price">R$ 110</div>
+                        </div>
+                        <div class="gift-actions">
+                            <a href="#" class="gift-cta">Dar este presente</a>
+                        </div>
+                    </article>
+
+                    <article class="gift-card">
+                        <div class="gift-main">
+                            <div class="gift-name">Suco gelado nas tardes quentes (jarra de vidro)</div>
+                            <div class="gift-price">R$ 70</div>
+                        </div>
+                        <div class="gift-actions">
+                            <a href="#" class="gift-cta">Dar este presente</a>
+                        </div>
+                    </article>
+
+                    <article class="gift-card">
+                        <div class="gift-main">
+                            <div class="gift-name">Temperos do nosso lar (porta temperos)</div>
+                            <div class="gift-price">R$ 80</div>
+                        </div>
+                        <div class="gift-actions">
+                            <a href="#" class="gift-cta">Dar este presente</a>
+                        </div>
+                    </article>
+
+                    <article class="gift-card">
+                        <div class="gift-main">
+                            <div class="gift-name">Utensílios para nossas aventuras culinárias</div>
+                            <div class="gift-price">R$ 90</div>
+                        </div>
+                        <div class="gift-actions">
+                            <a href="#" class="gift-cta">Dar este presente</a>
+                        </div>
+                    </article>
+
+                    <article class="gift-card">
+                        <div class="gift-main">
+                            <div class="gift-name">Comidinhas rápidas e deliciosas (Air Fryer)</div>
+                            <div class="gift-price">R$ 290</div>
+                        </div>
+                        <div class="gift-actions">
+                            <a href="#" class="gift-cta">Dar este presente</a>
+                        </div>
+                    </article>
+
+                    <article class="gift-card">
+                        <div class="gift-main">
+                            <div class="gift-name">Vitaminas para começar bem o dia (liquidificador)</div>
+                            <div class="gift-price">R$ 230</div>
+                        </div>
+                        <div class="gift-actions">
+                            <a href="#" class="gift-cta">Dar este presente</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- QUARTO -->
+        <section class="slide" id="slide-quarto">
+            <!-- Lua e estrelas -->
+            <div class="moon"></div>
+            <div class="stars-container">
+                <div class="star"></div>
+                <div class="star"></div>
+                <div class="star"></div>
+                <div class="star"></div>
+                <div class="star"></div>
+                <div class="star"></div>
+                <div class="star"></div>
+                <div class="star"></div>
+            </div>
+            <div class="sleep-container">
+                <div class="zzz">z</div>
+                <div class="zzz">z</div>
+                <div class="zzz">z</div>
+            </div>
+
+            <div class="slide-inner">
+                <div class="room-header">
+                    <div class="room-icon">🛏</div>
+                    <div class="room-title-wrap">
+                        <h2 class="room-title">Nosso Cantinho de Descanso</h2>
+                        <p class="room-subtitle">Silêncio, descanso e sonhos compartilhados</p>
+                        <span class="room-tag">Noites tranquilas</span>
+                    </div>
+                </div>
+                <p class="room-note">
+                    Este é o lugar onde o dia termina em paz. Cada detalhe aqui cuida um pouco do nosso sono.
+                </p>
+
+                <div class="gifts-grid">
+                    <article class="gift-card">
+                        <div class="gift-main">
+                            <div class="gift-name">Noites de descanso e paz (jogo de lençol)</div>
+                            <div class="gift-price">R$ 190</div>
+                        </div>
+                        <div class="gift-actions">
+                            <a href="#" class="gift-cta">Dar este presente</a>
+                        </div>
+                    </article>
+
+                    <article class="gift-card">
+                        <div class="gift-main">
+                            <div class="gift-name">Abraço quentinho nas noites frias (edredom)</div>
+                            <div class="gift-price">R$ 250</div>
+                        </div>
+                        <div class="gift-actions">
+                            <a href="#" class="gift-cta">Dar este presente</a>
+                        </div>
+                    </article>
+
+                    <article class="gift-card">
+                        <div class="gift-main">
+                            <div class="gift-name">Travesseiros para nossos sonhos</div>
+                            <div class="gift-price">R$ 90</div>
+                        </div>
+                        <div class="gift-actions">
+                            <a href="#" class="gift-cta">Dar este presente</a>
+                        </div>
+                    </article>
+
+                    <article class="gift-card">
+                        <div class="gift-main">
+                            <div class="gift-name">Cantinho de leitura à noite (abajur)</div>
+                            <div class="gift-price">R$ 110</div>
+                        </div>
+                        <div class="gift-actions">
+                            <a href="#" class="gift-cta">Dar este presente</a>
+                        </div>
+                    </article>
+
+                    <article class="gift-card">
+                        <div class="gift-main">
+                            <div class="gift-name">Organizando nossa nova vida (organizadores de guarda-roupa)</div>
+                            <div class="gift-price">R$ 80</div>
+                        </div>
+                        <div class="gift-actions">
+                            <a href="#" class="gift-cta">Dar este presente</a>
+                        </div>
+                    </article>
+
+                    <article class="gift-card">
+                        <div class="gift-main">
+                            <div class="gift-name">Cortina para nosso cantinho</div>
+                            <div class="gift-price">R$ 170</div>
+                        </div>
+                        <div class="gift-actions">
+                            <a href="#" class="gift-cta">Dar este presente</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- BANHEIRO -->
+        <section class="slide" id="slide-banho">
+            <!-- Gotas e bolhas -->
+            <div class="drops-container">
+                <div class="water-drop"></div>
+                <div class="water-drop"></div>
+                <div class="water-drop"></div>
+                <div class="water-drop"></div>
+                <div class="water-drop"></div>
+                <div class="water-drop"></div>
+                <div class="water-drop"></div>
+            </div>
+            <div class="bubbles-container">
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+                <div class="bubble"></div>
+            </div>
+
+            <div class="slide-inner">
+                <div class="room-header">
+                    <div class="room-icon">🚿</div>
+                    <div class="room-title-wrap">
+                        <h2 class="room-title">Momento de Relaxar</h2>
+                        <p class="room-subtitle">Banho demorado, cuidado e respiro do dia</p>
+                        <span class="room-tag">Cuidado diário</span>
+                    </div>
+                </div>
+                <p class="room-note">
+                    Depois de um dia cheio, é aqui que a gente desacelera. Estes presentes fazem parte desse ritual.
+                </p>
+
+                <div class="gifts-grid">
+                    <article class="gift-card">
+                        <div class="gift-main">
+                            <div class="gift-name">Banho relaxante depois de um dia longo (jogo de toalhas)</div>
+                            <div class="gift-price">R$ 140</div>
+                        </div>
+                        <div class="gift-actions">
+                            <a href="#" class="gift-cta">Dar este presente</a>
+                        </div>
+                    </article>
+
+                    <article class="gift-card">
+                        <div class="gift-main">
+                            <div class="gift-name">Detalhes que fazem a casa bonita (kit banheiro)</div>
+                            <div class="gift-price">R$ 80</div>
+                        </div>
+                        <div class="gift-actions">
+                            <a href="#" class="gift-cta">Dar este presente</a>
+                        </div>
+                    </article>
+
+                    <article class="gift-card">
+                        <div class="gift-main">
+                            <div class="gift-name">Conforto no pós-banho (tapete de banheiro)</div>
+                            <div class="gift-price">R$ 60</div>
+                        </div>
+                        <div class="gift-actions">
+                            <a href="#" class="gift-cta">Dar este presente</a>
+                        </div>
+                    </article>
+
+                    <article class="gift-card">
+                        <div class="gift-main">
+                            <div class="gift-name">Espelho para começar bem o dia</div>
+                            <div class="gift-price">R$ 120</div>
+                        </div>
+                        <div class="gift-actions">
+                            <a href="#" class="gift-cta">Dar este presente</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- SALA -->
+        <section class="slide" id="slide-estar">
+            <!-- Partículas de luz -->
+            <div class="lights-container">
+                <div class="light-particle"></div>
+                <div class="light-particle"></div>
+                <div class="light-particle"></div>
+                <div class="light-particle"></div>
+                <div class="light-particle"></div>
+                <div class="light-particle"></div>
+            </div>
+
+            <div class="slide-inner">
+                <div class="room-header">
+                    <div class="room-icon">🛋</div>
+                    <div class="room-title-wrap">
+                        <h2 class="room-title">Espaço dos Bons Momentos</h2>
+                        <p class="room-subtitle">Filmes, risadas e visitas especiais</p>
+                        <span class="room-tag">Memórias em volta do sofá</span>
+                    </div>
+                </div>
+                <p class="room-note">
+                    Aqui queremos ver a casa cheia de gente querida, fotos, conversas e muita alegria.
+                </p>
+
+                <div class="gifts-grid">
+                    <article class="gift-card">
+                        <div class="gift-main">
+                            <div class="gift-name">Sessão de filmes no sofá (manta para sofá)</div>
+                            <div class="gift-price">R$ 130</div>
+                        </div>
+                        <div class="gift-actions">
+                            <a href="#" class="gift-cta">Dar este presente</a>
+                        </div>
+                    </article>
+
+                    <article class="gift-card">
+                        <div class="gift-main">
+                            <div class="gift-name">Almofadas para nosso descanso</div>
+                            <div class="gift-price">R$ 90</div>
+                        </div>
+                        <div class="gift-actions">
+                            <a href="#" class="gift-cta">Dar este presente</a>
+                        </div>
+                    </article>
+
+                    <article class="gift-card">
+                        <div class="gift-main">
+                            <div class="gift-name">Decorando nosso lar (vaso decorativo)</div>
+                            <div class="gift-price">R$ 95</div>
+                        </div>
+                        <div class="gift-actions">
+                            <a href="#" class="gift-cta">Dar este presente</a>
+                        </div>
+                    </article>
+
+                    <article class="gift-card">
+                        <div class="gift-main">
+                            <div class="gift-name">Momentos para lembrar (porta-retratos)</div>
+                            <div class="gift-price">R$ 60</div>
+                        </div>
+                        <div class="gift-actions">
+                            <a href="#" class="gift-cta">Dar este presente</a>
+                        </div>
+                    </article>
+
+                    <article class="gift-card">
+                        <div class="gift-main">
+                            <div class="gift-name">Hora de receber os amigos (bandeja decorativa)</div>
+                            <div class="gift-price">R$ 85</div>
+                        </div>
+                        <div class="gift-actions">
+                            <a href="#" class="gift-cta">Dar este presente</a>
+                        </div>
+                    </article>
+
+                    <article class="gift-card">
+                        <div class="gift-main">
+                            <div class="gift-name">Marcando o tempo do nosso amor (relógio de parede)</div>
+                            <div class="gift-price">R$ 140</div>
+                        </div>
+                        <div class="gift-actions">
+                            <a href="#" class="gift-cta">Dar este presente</a>
+                        </div>
+                    </article>
+
+                    <article class="gift-card">
+                        <div class="gift-main">
+                            <div class="gift-name">Iluminando nosso lar (luminária)</div>
+                            <div class="gift-price">R$ 120</div>
+                        </div>
+                        <div class="gift-actions">
+                            <a href="#" class="gift-cta">Dar este presente</a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+<!-- MENU INFERIOR -->
+<nav class="bottom-nav">
+    <button class="nav-dot active" data-go="slide-inicio">
+        <div>🏠</div>
+        <span>Início</span>
+    </button>
+    <button class="nav-dot" data-go="slide-cozinha">
+        <div>🍳</div>
+        <span>Cozinha</span>
+    </button>
+    <button class="nav-dot" data-go="slide-quarto">
+        <div>🛏</div>
+        <span>Quarto</span>
+    </button>
+    <button class="nav-dot" data-go="slide-banho">
+        <div>🚿</div>
+        <span>Banho</span>
+    </button>
+    <button class="nav-dot" data-go="slide-estar">
+        <div>🛋</div>
+        <span>Sala</span>
+    </button>
+</nav>
+
+<script>
+    const navDots = document.querySelectorAll('.nav-dot');
+    const slider = document.getElementById('slider');
+    const slides = document.querySelectorAll('.slide');
+
+    // Clique no menu -> rola para o slide
+    navDots.forEach(dot => {
+        dot.addEventListener('click', () => {
+            const targetId = dot.getAttribute('data-go');
+            const target = document.getElementById(targetId);
+            if (!target) return;
+            target.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+        });
+    });
+
+    // Atualiza botão ativo ao rolar
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const id = entry.target.id;
+                navDots.forEach(dot => {
+                    dot.classList.toggle('active', dot.getAttribute('data-go') === id);
+                });
+            }
+        });
+    }, { threshold: 0.6, root: slider });
+
+    slides.forEach(s => observer.observe(s));
+
+    // Efeito de clique nos cards
+    document.addEventListener('click', (e) => {
+        const card = e.target.closest('.gift-card');
+        if (!card) return;
+        card.style.transform = 'scale(0.98)';
+        setTimeout(() => {
+            card.style.transform = '';
+        }, 150);
+    });
+</script>
+
+</body>
+</html>
