@@ -480,10 +480,10 @@
 <!-- HERO -->
 <div class="hero">
   <p class="hero-eyebrow">Lista de Presentes</p>
-  <h1 class="hero-title">Nossa <em>Casinha</em><br>começa com você</h1>
+  <h1 class="hero-title">Obrigado por <em>tanto</em> carinho</h1>
   <div class="hero-divider"></div>
-  <p class="hero-sub">Sua presença já é tudo. Mas se quiser nos presentear,<br>cada item aqui foi escolhido com muito carinho.</p>
-  <p class="hero-tip">🛒 Selecione quantos presentes quiser e acesse todos os links pelo carrinho</p>
+  <p class="hero-sub">Sua presença já é o nosso maior presente.<br>Recebemos cada gesto de carinho com muita gratidão.</p>
+  <p class="hero-tip">🛒 Selecione os itens que desejar e acesse os links pelo carrinho</p>
 </div>
 
 <!-- CONTROLS -->
@@ -529,7 +529,7 @@
       <span class="cart-summary-label">Total selecionado</span>
       <span class="cart-summary-total" id="cartTotal">R$ 0</span>
     </div>
-    <p class="cart-note">Clique em cada presente para ir ao link de pagamento. Cada um é pago separadamente com muito amor. 🤍</p>
+    <p class="cart-note">Cada presente pode ser pago separadamente. Ficamos muito gratos por qualquer gesto de carinho. 🤍</p>
     <button class="cart-clear" onclick="clearCart()">Limpar carrinho</button>
   </div>
 </div>
@@ -586,70 +586,6 @@ const data = [
       { id:"l1", name:"Balde",           price:25, link:"https://mpago.la/2K1eL8P", given:false },
       { id:"l2", name:"Varal",           price:50, link:"https://mpago.la/345gtuT", given:false },
       { id:"l3", name:"Cesto de roupas", price:60, link:"https://mpago.la/2SVv8WS", given:false },
-      { id:"l4", name:"Vassoura + rodo", price:40, link:"https://mpago.la/1ABbin8", given:false },
-    ]
-  },
-  {
-    id: "decoracao", icon: "🌿", name: "Decoração", subtitle: "Detalhes do Nosso Lar",
-    items: [
-      { id:"d1", name:"Vasos decorativos",    price:40, link:"https://mpago.la/1Fx5oxw", given:false },
-      { id:"d2", name:"Velas aromáticas",     price:30, link:"https://mpago.la/1wRbnsi", given:false },
-      { id:"d3", name:"Quadros simples",      price:60, link:"https://mpago.la/1Ar2FHA", given:false },
-      { id:"d4", name:"Plantinha artificial", price:35, link:"https://mpago.la/31KQj7Q", given:false },
-    ]
-  },
-  {
-    id: "momentos", icon: "🍽️", name: "Momentos a Dois", subtitle: "Sabores do Nosso Amor",
-    items: [
-      { id:"m1", name:"Nosso primeiro jantar especial", price:80, link:"https://mpago.la/2Jan4Sa", given:false },
-      { id:"m2", name:"Almoço juntinhos",              price:70, link:"https://mpago.la/2vtAfsR", given:false },
-      { id:"m3", name:"Café da manhã a dois",          price:60, link:"https://mpago.la/1Ar2FHA", given:false },
-      { id:"m4", name:"Uma doce sobremesa",            price:40, link:"https://mpago.la/1Fx5oxw", given:false },
-    ]
-  },
-  {
-    id: "lazer", icon: "🎬", name: "Lazer em Casa", subtitle: "Nosso Cantinho",
-    items: [
-      { id:"lz1", name:"Noite de pizza e risadas",  price:50, link:"https://mpago.la/1eGCtmZ", given:false },
-      { id:"lz2", name:"Cinema no sofá",            price:40, link:"https://mpago.la/1Fx5oxw", given:false },
-      { id:"lz3", name:"Hambúrguer e conversa boa", price:60, link:"https://mpago.la/1Ar2FHA", given:false },
-      { id:"lz4", name:"Noite de jogos",            price:40, link:"https://mpago.la/1Fx5oxw", given:false },
-    ]
-  },
-  {
-    id: "diaadia", icon: "🛒", name: "Dia a Dia", subtitle: "Construindo Nosso Lar",
-    items: [
-      { id:"dd1", name:"Compras do mês",          price:100, link:"https://mpago.la/1ASeiDW", given:false },
-      { id:"dd2", name:"Feira da semana",         price:60,  link:"https://mpago.la/1Ar2FHA", given:false },
-      { id:"dd3", name:"Primeira ida ao mercado", price:80,  link:"https://mpago.la/2Jan4Sa", given:false },
-      { id:"dd4", name:"Despensa cheia de amor",  price:70,  link:"https://mpago.la/2vtAfsR", given:false },
-    ]
-  },
-  {
-    id: "casados", icon: "💑", name: "Vida de Casados", subtitle: "Nossa Rotina Juntos",
-    items: [
-      { id:"ca1", name:"Nosso primeiro mês",      price:100, link:"https://mpago.la/1ASeiDW", given:false },
-      { id:"ca2", name:"Um encontro especial",    price:80,  link:"https://mpago.la/2Jan4Sa", given:false },
-      { id:"ca3", name:"Dia de descanso a dois",  price:70,  link:"https://mpago.la/2vtAfsR", given:false },
-      { id:"ca4", name:"Um passeio inesquecível", price:90,  link:"https://mpago.la/2YFVQe5", given:false },
-    ]
-  },
-  {
-    id: "lua", icon: "✨", name: "Lua de Mel", subtitle: "Nossa Primeira Viagem",
-    items: [
-      { id:"lu1", name:"Ajude nossa lua de mel",    price:100, link:"https://mpago.la/1ASeiDW", given:false },
-      { id:"lu2", name:"Jantar na viagem",          price:80,  link:"https://mpago.la/2Jan4Sa", given:false },
-      { id:"lu3", name:"Um passeio especial",       price:90,  link:"https://mpago.la/2YFVQe5", given:false },
-      { id:"lu4", name:"Lembrança da nossa viagem", price:60,  link:"https://mpago.la/1Ar2FHA", given:false },
-    ]
-  },
-  {
-    id: "prazeres", icon: "☕", name: "Pequenos Prazeres", subtitle: "Detalhes que Encantam",
-    items: [
-      { id:"p1", name:"Nosso cafezinho",   price:30, link:"https://mpago.la/1wRbnsi", given:false },
-      { id:"p2", name:"Um sorvete juntos", price:30, link:"https://mpago.la/1wRbnsi", given:false },
-      { id:"p3", name:"Lanche da noite",   price:40, link:"https://mpago.la/1Fx5oxw", given:false },
-      { id:"p4", name:"Piquenique a dois", price:50, link:"https://mpago.la/1eGCtmZ", given:false },
     ]
   },
 ];
@@ -749,7 +685,7 @@ function renderCartDrawer() {
           <p class="cart-item-name">${item.name}</p>
           <p class="cart-item-price">R$ ${item.price}</p>
           ${item.link
-            ? `<a href="${item.link}" class="cart-item-link">Ir para o pagamento →</a>`
+            ? `<a href="${item.link}" class="cart-item-link">Acessar link →</a>`
             : `<span class="cart-item-link no-link-yet">Link em breve</span>`
           }
         </div>
@@ -812,9 +748,9 @@ function render() {
           } else if (inCart) {
             statusHtml = `<span class="gift-status in-cart-badge" onclick="toggleCart('${item.id}')" style="cursor:pointer">No carrinho ✓</span>`;
           } else if (item.link) {
-            statusHtml = `<span class="gift-status available" onclick="toggleCart('${item.id}')">+ Adicionar</span>`;
+            statusHtml = `<span class="gift-status available" onclick="toggleCart('${item.id}')">Selecionar</span>`;
           } else {
-            statusHtml = `<span class="gift-status available" onclick="toggleCart('${item.id}')">+ Adicionar</span>`;
+            statusHtml = `<span class="gift-status available" onclick="toggleCart('${item.id}')">Selecionar</span>`;
           }
 
           return `
